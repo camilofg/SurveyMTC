@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="ISO-8859-1">
+        <title>Evaluación de profesores</title>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/css/survey.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="resources/js/survey/service_survey.js"></script>
+        <script type="text/javascript" src="resources/js/graph/service_graph.js"></script>
+
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/highcharts-more.js"></script>
+        <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+
+    </head>
+ 
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Nav tabs -->
+            <div class="card">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#survey" aria-controls="survey" role="tab" data-toggle="tab">Encuesta</a></li>
+                    <li role="presentation"><a href="#graphs" aria-controls="graphs" role="tab" data-toggle="tab">Gráficas</a></li>
+                    <li role="presentation"><a href="#reports" aria-controls="reports" role="tab" data-toggle="tab">Reportes</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+       	 		 
+                    <div role="tabpanel" class="tab-pane active" id="survey">
+                    
+                        <form class="form-horizontal" method="post" id="formEncuesta">
+                            
+                            <input type="hidden" name="survey_id" value="2" id="survey_id"> 
+
+                            <fieldset>
+                                <legend><h2>Evaluación de profesores</h2></legend>
+                                <div class="form-group">
+                                  <label class="col-md-12 ">
+                                  Por favor evalue a los profesores
+                                  </label> 
+                                </div>
+                            </fieldset>
+                           <div class="panel panel-default">
+                               <div class="panel-heading">Datos Personales</div>
+                               <div class="panel-body">
+                               	<div class="form-group">
+                                     <label class="col-md-4 control-label">Nombre </label>           
+                                     <div class="col-md-5">              
+                                      <input name="9" 
+                                      		id="" 
+                                      		type="TEXT" 
+                                      		maxlength="50"
+                                      		required="false"
+                                      		class="form-control input-md">            
+                                      </div>
+                                 </div>
+                               	<div class="form-group">
+                                     <label class="col-md-4 control-label">Correo institucional</label>           
+                                     <div class="col-md-5">              
+                                      <input name="10" 
+                                      		id="" 
+                                      		type="EMAIL" 
+                                      		maxlength="50"
+                                      		required="false"
+                                      		class="form-control input-md">            
+                                      </div>
+                                 </div>
+                               </div>
+                            </div>
+                           <div class="panel panel-default">
+                               <div class="panel-heading">Evaluación Curso</div>
+                               <div class="panel-body">
+                               	
+                               	 <div class="form-group single-question">
+                                     <label class="col-md-4 control-label">Seleccione el profesor a evaluar</label>                
+                                     <div class="col-md-5">
+   	 				 					<div class="radio">                   
+                                          <label>                       
+                                          <input type="radio" 
+                                          		name="11" 
+                                          		value="A15"
+                                          		required="false"
+                                          		>
+                                          	Kelly                     
+                                          </label>                  
+                                        </div>
+   	 				 					<div class="radio">                   
+                                          <label>                       
+                                          <input type="radio" 
+                                          		name="11" 
+                                          		value="A16"
+                                          		required="false"
+                                          		>
+                                          	Gloria                     
+                                          </label>                  
+                                        </div>
+                                     </div>
+                                  </div>
+	 
+                               	
+                               	 <div class="form-group single-question">
+                                     <label class="col-md-4 control-label">Que clase tomó con Kelly</label>                
+                                     <div class="col-md-5">
+   	 				 					<div class="radio">                   
+                                          <label>                       
+                                          <input type="radio" 
+                                          		name="12" 
+                                          		value="A17"
+                                          		required="false"
+                                          		>
+                                          	Automatización 1                     
+                                          </label>                  
+                                        </div>
+                                     </div>
+                                  </div>
+	 
+                               	
+                               	 <div class="form-group single-question">
+                                     <label class="col-md-4 control-label">Cual es su opinión respecto a Kelly como profesora</label>                
+                                     <div class="col-md-5">
+   	 				 					<div class="radio">                   
+                                          <label>                       
+                                          <input type="radio" 
+                                          		name="13" 
+                                          		value="A18"
+                                          		required="false"
+                                          		>
+                                          	Excelente                     
+                                          </label>                  
+                                        </div>
+   	 				 					<div class="radio">                   
+                                          <label>                       
+                                          <input type="radio" 
+                                          		name="13" 
+                                          		value="A19"
+                                          		required="false"
+                                          		>
+                                          	Buena                     
+                                          </label>                  
+                                        </div>
+   	 				 					<div class="radio">                   
+                                          <label>                       
+                                          <input type="radio" 
+                                          		name="13" 
+                                          		value="A20"
+                                          		required="false"
+                                          		>
+                                          	Mala                     
+                                          </label>                  
+                                        </div>
+   	 				 					<div class="radio">                   
+                                          <label>                       
+                                          <input type="radio" 
+                                          		name="13" 
+                                          		value="A21"
+                                          		required="false"
+                                          		>
+                                          	Otra                     
+                                          </label>                  
+                                        </div>
+                                     </div>
+                                  </div>
+	 
+                               </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-md-4 control-label"></label>
+                              <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary" value="submit" style="width: 360px;">Enviar</button>
+                              </div>
+                            </div>
+
+                        </form>
+
+                     </div>       	 		 
+       	 		 
+
+                    <div role="tabpanel" class="tab-pane" id="graphs">
+                      
+                      <fieldset>
+                        <legend><h2>Gráficas del resultado encuesta</h2></legend>
+                      </fieldset>
+
+                      <div id="graph_1"></div>
+                      <div id="graph_2"></div>
+                      <div id="graph_3"></div>
+                      
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="reports">
+
+                        <fieldset>
+                          <legend><h2>Reportes encuesta</h2></legend>
+                        </fieldset>
+
+                        <div class="row">
+                        
+                            <div class="col-md-12">
+                              <div class="update-nag">
+                                <div class="update-split"><i></i>10</div>
+                                <div class="update-text">Cantidad de mujeres del curso Ágiles que respondieron la encuesta.</div>
+                              </div>
+                            </div>
+                        
+                            <div class="col-md-12">
+                              <div class="update-nag">
+                                <div class="update-split update-info">10</div>
+                                <div class="update-text">Total de estudiantes que asisten al curso de Automatización.</div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-12">
+                              <div class="update-nag">
+                                <div class="update-split update-success">10</div>
+                                <div class="update-text">Estudiantes que aprueban el contenido del programa del curso y horario.</div>
+                              </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                              <div class="update-nag">
+                                <div class="update-split update-danger">10</div>
+                                <div class="update-text">Cantidad de estudiantes del curso de Automatización cuyo satisfacción es alta</div>
+                              </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Encuesta enviada</h4>
+      </div>
+      <div class="modal-body">
+      Tu opinión es muy valiosa, gracias por contestar la encuesta.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="error" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Error enviar encuesta.</h4>
+      </div>
+      <div class="modal-body">
+      En este momento no es posible enviar la encuesta. Intente nuevamente!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>

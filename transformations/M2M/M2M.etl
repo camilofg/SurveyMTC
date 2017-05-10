@@ -1,0 +1,177 @@
+rule CreatorToContainer
+transform 
+	creator: survey!Creator
+to
+	container:html!Container{
+		container.name = creator.name;
+		container.pages = creator.surveys.equivalent();
+	}
+
+rule SurveyToPage
+transform 
+	survey: survey!Survey
+to
+	page: html!Page{
+		page.id = survey.name;
+		page.title = survey.title;
+		page.description = survey.description;
+		page.urlToSaveResponses = survey.urlToSaveResponses;
+		page.urlToGetData = survey.urlToGetData; 
+		page.urlToGetRelationResult = survey.urlToGetRelationResult;
+		var viewGraph = new html!View();
+		viewGraph.title = "Gráficas";
+		
+		for (section : survey!Section in survey.sections) {
+			for (question : Question in section.questions) {
+				if(question.GraphType <> survey!GraphType#None)
+					viewGraph.graphs.add(question.getGraph());
+			} 
+		}
+		
+		var viewSurvey = new html!View();
+		viewSurvey.title = "Encuesta";
+		viewSurvey.sections = survey.sections.equivalent();
+		page.views.add(viewGraph);
+		page.views.add(viewSurvey);
+	}
+ 
+operation survey!Question getGraph() : html!Graph {
+	var graph = new html!Graph;
+	graph.title = self.description;
+	if(self.GraphType == survey!GraphType#Bar)
+		graph.type = html!GraphType#BAR;
+	if(self.GraphType == survey!GraphType#Pie)
+		graph.type = html!GraphType#PIE;
+	if(self.GraphType == survey!GraphType#Scalar)
+		graph.type = html!GraphType#SCALAR;
+	return graph;
+}
+
+rule ToSection
+transform 
+	secSurvey: survey!Section
+to
+	secHtml: html!Section{
+		secHtml.id = secSurvey.id;
+		secHtml.title = secSurvey.title;
+		secHtml.formElements = secSurvey.questions.equivalent();
+	}
+	
+@abstract 
+rule ToEditable
+transform 
+	question : survey!Question
+to
+	editable : html!Editable{
+	editable.name = question.name;
+	editable.required = question.isRequired;
+	var label = new html!Label();
+	label.content = question.description;
+	label.forText = question.name;
+	editable.label = label;
+	editable.visible = survey!Answer.all.select(ans|ans.subquestions.select(subquestion|subquestion.id==question.id).notEmpty()).isEmpty();
+		
+}
+
+rule OpenToInputText
+transform 
+	open: survey!Open
+to
+	input:html!Input extends ToEditable{
+		guard : (not open.isMultiline)
+		input.maxLength = open.maxLength; 
+		if(open.type == survey!AnswerType#String)
+			input.type = html!InputType#TEXT;
+		if(open.type == survey!AnswerType#Date)
+			input.type = html!InputType#DATE;
+		if(open.type == survey!AnswerType#Integer)
+			input.type = html!InputType#NUMBER;
+		if(open.type == survey!AnswerType#Email)
+			input.type = html!InputType#EMAIL;
+	}
+
+
+rule OpenToTextArea
+transform 
+	open: survey!Open
+to
+	textArea:html!TextArea  extends ToEditable{
+		guard : (open.isMultiline)
+		textArea.maxLength = open.maxLength;
+		textArea.rows=5;
+	}
+
+rule ToInputScalar
+transform 
+	scalar: survey!Scalar
+to
+	input:html!Input extends ToEditable{
+		input.min = scalar.startValue;
+		input.max = scalar.endValue;
+		input.step = 1;
+		input.type = html!InputType#RANGE;
+	}
+
+rule ToSingleSelect
+transform 
+	single: survey!Single
+to
+	selectionList: html!Select extends ToEditable{
+		if(single.type == survey!SingleControlType#Combo)
+			selectionList.type = html!SelectType#COMBO;
+		if(single.type == survey!SingleControlType#ListControl)
+			selectionList.type = html!SelectType#LIST;
+		selectionList.options = single.answers.equivalent();
+	}
+
+rule ToSMultipleSelect
+transform 
+	single: survey!Multiple
+to
+	selectionList: html!Select extends ToEditable{
+		selectionList.multiple = true;
+		selectionList.options = single.answers.equivalent();
+	}
+	
+rule ToOption
+transform
+	answer : survey!Answer
+to
+	option : html!Option{
+		option.content = answer.description;
+		option.value = answer.name;
+		if(answer.requiredWhiteSpace == true){
+			var textArea = new html!TextArea();
+			textArea.rows = 5;
+			textArea.maxLength = answer.maxLengthOther;
+			option.otherArea = textArea;
+		}
+		option.formElements = answer.subquestions.equivalent();
+	}
+	
+rule ToSelectComplex
+transform
+	grid: survey!Grid
+to
+	selectComplex:html!SelectComplex extends ToEditable{
+		selectComplex.options = grid.answerOptions.equivalent();
+		selectComplex.columnsOptions = grid.scaleOptions.equivalent();
+	}
+
+rule AnswerOptionToOption
+transform
+	answer : survey!AnswerOption
+to
+	option : html!Option{
+		option.content = answer.description;
+		option.value = answer.name;		
+	}
+
+rule ScaleOptionToColumnOption
+transform
+	answer : survey!ScaleOption
+to
+	option : html!ColumnOption{
+		option.content = answer.description;
+		option.value = answer.name;		
+	}

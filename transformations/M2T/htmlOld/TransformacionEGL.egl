@@ -1,0 +1,235 @@
+[%	
+
+var root : cs!Survey:= cs!Survey.all.at(0);
+%]
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="ISO-8859-1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var sectionSelected = getParameterByName('section');
+
+            $("fieldset[id*='Section']").css("display", "none");
+
+            $('#Section_' + sectionSelected).css("display", "block");
+			
+			$("#ex5").slider();
+
+            $(":radio").click(function () {
+                if ($(this).attr("class") == "other")
+                    $("#" + this.id + "_other").css("display", "block");
+                else
+                    $("#" + this.id + "_other").css("display", "none");
+            });
+
+            function showValue(newValue) {
+                document.getElementById("range").innerHTML = newValue;
+            }
+
+            function getParameterByName(name, url) {
+                if (!url) {
+                    url = window.location.href;
+                }
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+        });
+    </script>
+    <style type="text/css">
+        fieldset.scheduler-border {
+            border: 1px groove #ddd !important;
+            padding: 0 1.4em 1.4em 1.4em !important;
+            margin: 0 0 1.5em 0 !important;
+            -webkit-box-shadow: 0px 0px 0px 0px #000;
+            box-shadow: 0px 0px 0px 0px #000;
+        }
+        
+        /*
+        input[type=range]::-webkit-slider-thumb {
+		  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+		  border: 1px solid #000000;
+		  height: 39px;
+		  width: 19px;
+		  border-radius: 13px;
+		  background: rgba(130, 255, 255, 0.45);
+		  cursor: pointer;
+		  -webkit-appearance: none;
+		  margin-top: -15.5px;
+		}
+		*/
+		
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+    </style>
+<title>[%=root.Title%]</title>
+
+</head>
+<body>
+<div class="div">
+<a  name="top"></a>
+<div class="container">
+        <div class="jumbotron" id="Survey">
+            <h1>[%=root.Title%]</h1>
+            <p>
+                [%=root.description%]
+            </p>
+        </div>
+	[%
+ 	for(section in cs!Section.all)
+ 	{
+ 	%]
+ 	<fieldset class="box-border" id="Section_[%=section.sectionId%]" >
+ 	<legend class="scheduler-border">[%=section.title%]:</legend>
+ 		[%
+ 		for(question in section.questions)
+	 	{
+	 	if(question.select(a|a.isTypeOf(cs!Open)).size()>0)
+	 	{
+	 	%]
+ 		<div class="input-group" id="question_[%=question.position%]">
+                <span class="input-group-addon">[%=question.description%]</span>
+                <input id="answer_[%=question.position%]" 
+                	[%
+                	if(question.type.toString() = 'Integer')
+            		{
+                		%]
+                 			type="number" 
+        				[%
+        			}
+        			if(question.type.toString() = 'Date')
+            		{
+	        			%]
+	        				type="date" 
+	    				[%
+        			}
+        			else 
+        			{
+	        			%]
+	        				type="text" 
+	        			[%
+        			}
+        			%]
+        			class="form-control" name="answer_[%=question.position%]" placeholder="[%=question.description%]" />
+		</div>
+       	[%
+		}
+ 		if(question.select(a|a.isTypeOf(cs!Single)).size()>0)
+	 	{
+	 	%]
+	 	<div class="input-group" id="question_[%=question.position%]">
+                <fieldset class="scheduler-border">
+                    <legend>[%=question.description%]</legend>
+                        [%
+                        for(answer in question.answer)
+                        {
+                        %]
+                        <div class="radio-inline">
+	                        <label>
+	                        	<input type="radio" name="answer_[%=question.position%]" id="answer_[%=question.position%]" value="[%=answer.value%]"
+	                            [%
+	                            if(answer.description = 'Otro')
+	                            {
+		                            %]
+		                            class="other" 
+		                            [%
+	                            }
+	                            %]
+	                        />[%=answer.description.trim()%]
+	                        </label>
+                        </div>
+                        [%
+                        if(answer.requiredWhiteSpace)
+	                        {
+		                        %]
+		                        	<input id="answer_[%=question.position%]_other" style="display:none" type="text" class="form-control" name="msg" placeholder="[%=answer.description.trim()%]/">
+		                        [%
+	                        }
+                        }
+                        %]
+                  </fieldset>
+        </div>
+		[%
+		}
+		        if(question.select(a|a.isTypeOf(cs!Scalar)).size()>0)
+			 	{	
+			 	%]
+			 	<div id="question_[%=question.position%]">
+                    <span class="input-group-addon">[%=question.description%]</span></br>
+                    <input type="range" name="answer_[%=question.position%]" min="[%=question.startValue%]" max="[%=question.endValue%]" step="1"  onchange="showValue(this.value)">
+                </div>
+			 	[%
+			 	}
+				 	if(question.select(a|a.isTypeOf(cs!Grid)).size()>0)
+				 	{	
+					 	%]
+					 	<div class="input-group" id="question_[%=question.position%]">
+		                	<span class="input-group-addon">[%=question.description%]</span>
+		                	<table>
+		                		<thead>
+			                		<tr>
+			                			<td>&nbsp;&nbsp;&nbsp;</td>
+		                	[%
+		                    for(col in question.column)
+		                    {
+		                    %]
+		                        
+		                        		<td>&nbsp;&nbsp;[%=col.answer%]&nbsp;&nbsp;</td>
+		                        
+					 		[%
+				 			}
+				 			%]
+				 					</tr>
+			 					</thead>
+			 					<tbody>
+			 				[%
+				 			for(row in question.rows)
+		                    {
+				 			%]
+					 			<tr>
+					 				<td>[%=row.question%]</td>
+				 					[%
+				                    for(col in question.column)
+					                    {
+						                    %]
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_[%=row.question%]" id="answer_[%=row.question%]" value="[%=col.position%]" />
+							 				</td>
+							 				[%
+				 						}
+				 						%]
+				 						</tr>
+				 						[%
+				 			}
+				 			%]
+				 				</tbody>
+				 			</table>
+				 			[%
+			 		}
+			 		%]
+			 		</br>
+			 		</br>
+			 		[%
+	 			}
+	 	%]
+ 	</fieldset/> 
+ 	[%
+ 	}
+ 	%]
+ 	
+</div>
+</body>

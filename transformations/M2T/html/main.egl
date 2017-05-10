@@ -1,0 +1,23 @@
+[% 
+  	
+   	for(page in html!Page.all) {
+   		//Creación páginas HTML por encuesta.
+		var html: Template:=TemplateFactory.load('SurveyHTML.egl');
+		html.populate("pg",page);
+		html.generate('./uniandes.survey.web/' + page.title + '/Survey.html');
+	   
+		//Creación estilos CSS.
+		var css: Template:=TemplateFactory.load('SurveyCSS.egl');
+		css.populate("pg",page);
+		css.generate('./uniandes.survey.web/' + page.title + '/resources/css/survey.css');
+	   
+		//Creación archivos Javascript.
+		var jsGraph: Template:=TemplateFactory.load('GraphJS.egl');
+		jsGraph.populate("pg",page);
+		jsGraph.generate('./uniandes.survey.web/' + page.title + '/resources/js/graph/service_graph.js');
+		var jsSurvey: Template:=TemplateFactory.load('SurveyJS.egl');
+		jsSurvey.populate("pg",page);
+		jsSurvey.generate('./uniandes.survey.web/' + page.title + '/resources/js/survey/service_survey.js');
+ 	}
+
+%]

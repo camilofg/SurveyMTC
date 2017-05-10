@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ASCII"?>
+<surveys:Creator xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:surveys="http://www.Surveys.uniandes" creator="Paula Castellanos">
+  <surveys title="Nombre de la encuesta" name="Survey5" description="Hola, Por favor, invierta unos pocos minutos de su tiempo para rellenar el siguiente cuestionario." startDate="2017-01-01" endDate="2017-01-30" urlToGetData="http://www.google.com" urlToGetRelationResult="http://www.google.com" urlToSaveResponses="http://www.google.com">
+    <sections title="Datos personales" name="S3">
+      <questions xsi:type="surveys:Open" description="Nombres" name="O2" isMultiline="true" maxlength="50"/>
+    </sections>
+    <sections title="Evaluaci&#xfffd;n del curso" name="S35">
+      <questions xsi:type="surveys:Multiple" description="&#xfffd;Cu&#xfffd;les son los aspectos que m&#xfffd;s rescata del curso?" name="M35" GraphType="Scalar">
+        <answers description="Logistica" name="M20"/>
+        <answers description="Tiempo" name="M21"/>
+        <answers description="Otro" name="M22" requiredWhiteSpace="true" maxLengthOther="200"/>
+      </questions>
+      <questions xsi:type="surveys:Single" description="Seleccione el profesor a evaluar" name="S23" isRequired="true" type="Combo">
+        <answers description="Kelly" name="SN23"/>
+        <answers description="Gloria" name="SN24"/>
+      </questions>
+      <questions xsi:type="surveys:Single" description="Seleccione el profesor a evaluar 2" name="S24" isRequired="true" type="Combo">
+        <answers description="Juan" name="SN25"/>
+        <answers description="Gloria" name="SN26"/>
+      </questions>
+      <questions xsi:type="surveys:Scalar" description="Indique su nivel de satisfacci&#xfffd;n general frente al curso" name="SL126" GraphType="Scalar" endValue="100"/>
+      <questions xsi:type="surveys:Scalar" description="Indique su nivel de satisfacci&#xfffd;n general frente al curso" name="SL27" GraphType="Scalar" endValue="100"/>
+    </sections>
+    <relations Description="blabla">
+      <expressionlogic>
+        <left xsi:type="surveys:TotalAnswerByScalarValue" sectionId="//@surveys.0/@sections.1" questionId="//@surveys.0/@sections.1/@questions.3" value="3"/>
+        <rigth xsi:type="surveys:expressionlogic" operator="OR">
+          <left xsi:type="surveys:TotalAnswerValue" sectionId="//@surveys.0/@sections.1" questionId="//@surveys.0/@sections.1/@questions.2" answerId="//@surveys.0/@sections.1/@questions.2/@answers.1"/>
+          <rigth xsi:type="surveys:TotalAnswerByScalarValue" sectionId="//@surveys.0/@sections.1" questionId="//@surveys.0/@sections.1/@questions.4" value="3"/>
+        </rigth>
+      </expressionlogic>
+    </relations>
+  </surveys>
+</surveys:Creator>

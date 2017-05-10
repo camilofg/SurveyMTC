@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="ASCII"?>
+<html:Container xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:html="http://www.uniandes.edu.co/html" name="Julian Picon">
+  <pages title="Evaluaci&#xf3;n del curso" urlToSaveResponses="http://www.google.com" urlToGetData="http://www.google.com" urlToGetRelationResult="http://www.google.com" description="Hola, Por favor, invierta unos pocos minutos de su tiempo para rellenar el siguiente cuestionario." id="1">
+    <views title="Gr&#xe1;ficas">
+      <graphs type="PIE" title="G&#xe9;nero"/>
+      <graphs title="&#xbf;A qu&#xe9; curso acudes? "/>
+      <graphs title="&#xbf;Cu&#xe1;les son los aspectos que m&#xe1;s rescata del curso?"/>
+      <graphs type="SCALAR" title="Indique su nivel de satisfacci&#xf3;n general frente al curso"/>
+      <graphs title="Eval&#xfa;a los siguientes enunciados seg&#xfa;n tu opini&#xf3;n"/>
+    </views>
+    <views title="Encuesta">
+      <sections title="Datos personales" id="//@surveys.0/@sections.0">
+        <formElements xsi:type="html:Input" name="1" maxLength="50">
+          <label content="Nombres" forText="1"/>
+        </formElements>
+        <formElements xsi:type="html:Select" name="2" required="true">
+          <label content="G&#xe9;nero" forText="2"/>
+          <options content="Femenino" value="A1"/>
+          <options content="Masculino" value="A2"/>
+        </formElements>
+        <formElements xsi:type="html:Input" name="3" maxLength="10">
+          <label content="C&#xf3;digo" forText="3"/>
+        </formElements>
+      </sections>
+      <sections title="Evaluaci&#xf3;n del curso" id="//@surveys.0/@sections.1">
+        <formElements xsi:type="html:Select" name="4" required="true" type="COMBO">
+          <label content="&#xbf;A qu&#xe9; curso acudes? " forText="4"/>
+          <options content="Automatizaci&#xf3;n" value="A3"/>
+          <options content="Agiles" value="A4"/>
+          <options content="Fabricas de Software" value="A5"/>
+        </formElements>
+        <formElements xsi:type="html:Select" name="5" required="true" multiple="true">
+          <label id="" content="&#xbf;Cu&#xe1;les son los aspectos que m&#xe1;s rescata del curso?" forText="5"/>
+          <options content="Logistica" value="6"/>
+          <options content="Tiempo" value="7"/>
+          <options content="Contenido del curso" value="8"/>
+          <options content="Horario" value="9"/>
+          <options content="Plan de estudios" value="10"/>
+        </formElements>
+        <formElements xsi:type="html:Input" name="6" required="true" type="RANGE" min="1" max="5" step="1">
+          <label content="Indique su nivel de satisfacci&#xf3;n general frente al curso" forText="6"/>
+        </formElements>
+        <formElements xsi:type="html:TextArea" name="7" rows="5" maxLength="100">
+          <label content="&#xbf;Hay algo que se podr&#xed;a mejorar en el curso? Por favor, d&#xe9;janos saber tu opini&#xf3;n" forText="7"/>
+        </formElements>
+        <formElements xsi:type="html:SelectComplex" name="8">
+          <label content="Eval&#xfa;a los siguientes enunciados seg&#xfa;n tu opini&#xf3;n" forText="8"/>
+          <columnsOptions content="Si" value="1"/>
+          <columnsOptions content="No" value="2"/>
+          <columnsOptions content="Alguna Veces" value="3"/>
+          <options content="&#xbf;Hay cumplimiento del curso?" value="11"/>
+          <options content="&#xbf;Existen asesor&#xed;as?" value="12"/>
+          <options content="&#xbf;Se resuelven los problemas a tiempo?" value="13"/>
+          <options content="&#xbf;Es clara la informaci&#xf3;n suministrada?" value="14"/>
+        </formElements>
+      </sections>
+    </views>
+  </pages>
+  <pages title="Evaluaci&#xf3;n de profesores" urlToSaveResponses="www.google.com" urlToGetData="www.google.com" urlToGetRelationResult="www.google.com" description="Por favor evalue a los profesores" id="2">
+    <views title="Gr&#xe1;ficas">
+      <graphs title="Seleccione el profesor a evaluar"/>
+      <graphs title="Que clase tom&#xf3; con Kelly"/>
+      <graphs type="PIE" title="Cual es su opini&#xf3;n respecto a Kelly como profesora"/>
+    </views>
+    <views title="Encuesta">
+      <sections title="Datos Personales" id="//@surveys.1/@sections.0">
+        <formElements xsi:type="html:Input" name="9" maxLength="50">
+          <label content="Nombre " forText="9"/>
+        </formElements>
+        <formElements xsi:type="html:Input" name="10" type="EMAIL" maxLength="50">
+          <label content="Correo institucional" forText="10"/>
+        </formElements>
+      </sections>
+      <sections title="Evaluaci&#xf3;n Curso" id="//@surveys.1/@sections.1">
+        <formElements xsi:type="html:Select" name="11" type="COMBO">
+          <label content="Seleccione el profesor a evaluar" forText="11"/>
+          <options content="Kelly" value="A15" formElements="//@pages.1/@views.1/@sections.1/@formElements.1 //@pages.1/@views.1/@sections.1/@formElements.2"/>
+          <options content="Gloria" value="A16"/>
+        </formElements>
+        <formElements xsi:type="html:Select" visible="false" name="12">
+          <label content="Que clase tom&#xf3; con Kelly" forText="12"/>
+          <options content="Automatizaci&#xf3;n 1" value="A17"/>
+        </formElements>
+        <formElements xsi:type="html:Select" visible="false" name="13" type="COMBO">
+          <label content="Cual es su opini&#xf3;n respecto a Kelly como profesora" forText="13"/>
+          <options content="Excelente" value="A18"/>
+          <options content="Buena" value="A19"/>
+          <options content="Mala" value="A20"/>
+          <options content="Otra" value="A21">
+            <otherArea rows="5" maxLength="100"/>
+          </options>
+        </formElements>
+      </sections>
+    </views>
+  </pages>
+</html:Container>

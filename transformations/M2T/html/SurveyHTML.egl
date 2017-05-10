@@ -1,0 +1,354 @@
+[%	
+var page = pg;
+page.views.println();
+%]
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="ISO-8859-1">
+        <title>[%=page.title%]</title>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/css/survey.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="resources/js/survey/service_survey.js"></script>
+        <script type="text/javascript" src="resources/js/graph/service_graph.js"></script>
+
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/highcharts-more.js"></script>
+        <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+
+    </head>
+ 
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Nav tabs -->
+            <div class="card">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#survey" aria-controls="survey" role="tab" data-toggle="tab">Encuesta</a></li>
+                    <li role="presentation"><a href="#graphs" aria-controls="graphs" role="tab" data-toggle="tab">Gráficas</a></li>
+                    <li role="presentation"><a href="#reports" aria-controls="reports" role="tab" data-toggle="tab">Reportes</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+        [%
+        for(view in page.views) {
+       	 	if (view.title == "Encuesta") {
+       	%]
+       	 		 
+                    <div role="tabpanel" class="tab-pane active" id="survey">
+                    
+                        <form class="form-horizontal" method="post" id="formEncuesta">
+                            
+                            <input type="hidden" name="survey_id" value="[%=page.id%]" id="survey_id"> 
+
+                            <fieldset>
+                                <legend><h2>[%=page.title%]</h2></legend>
+                                <div class="form-group">
+                                  <label class="col-md-12 ">
+                                  [%=page.description%]
+                                  </label> 
+                                </div>
+                            </fieldset>
+				[%
+        		for (section in view.sections) { //Secciones de la página
+       	 		 %]
+                           <div class="panel panel-default">
+                               <div class="panel-heading">[%=section.title%]</div>
+                               <div class="panel-body">
+                    [%
+    				for (formElement in section.formElements) { //Secciones de la página
+    					var label = formElement.label;
+                       	if (formElement.isTypeOf(html!Input)){
+                       		var isScalar = (formElement.type == html!InputType#RANGE);
+                       		if (isScalar){
+                    		%]
+                    			<div class="form-group">
+                                     <label class="col-md-4 control-label">[%=label.content%]</label>           
+                                     <div class="col-md-5"> 
+                                     <div class="range range-success">             
+	                                      <input name="[%=formElement.name%]" 
+	                                      		id="[%=formElement.id%]" 
+	                                      		type="[%=formElement.type%]" 
+	                                      		maxlength="[%=formElement.maxLength%]"
+	                                      		required="[%=formElement.required%]"
+	                                      		step="[%=formElement.step%]"
+	                                      		min="[%=formElement.min%]"
+	                                      		max="[%=formElement.max%]"
+	                                      		class="form-control input-md"
+	                                      		onchange="outRange.value=this.value"> 
+	                                      <output id="outRange">1</output>           
+                                      	</div>
+                                      </div>
+                                 </div>
+                    		[%
+                       		} //Fin if isScalar
+                       		else {
+                       	%]
+                               	<div class="form-group">
+                                     <label class="col-md-4 control-label">[%=label.content%]</label>           
+                                     <div class="col-md-5">              
+                                      <input name="[%=formElement.name%]" 
+                                      		id="[%=formElement.id%]" 
+                                      		type="[%=formElement.type%]" 
+                                      		maxlength="[%=formElement.maxLength%]"
+                                      		required="[%=formElement.required%]"
+                                      		class="form-control input-md">            
+                                      </div>
+                                 </div>
+                       		[%
+                       		} //Fin else isScalar
+                       	} //Fin if -> Input type
+                       	else if (formElement.isTypeOf(html!Select)){
+                       		if (not formElement.multiple){ //Single
+                       	%]
+                               	
+                               	 <div class="form-group single-question">
+                                     <label class="col-md-4 control-label">[%=label.content%]</label>                
+                                     <div class="col-md-5">
+                                    [%
+    								for (option in formElement.options) { //Opciones pregunta single.
+   	 				 				%]
+   	 				 					<div class="radio">                   
+                                          <label>                       
+                                          <input type="radio" 
+                                          		name="[%=formElement.name%]" 
+                                          		value="[%=option.value%]"
+                                          		required="[%=formElement.required%]"
+                                          		>
+                                          	[%=option.content%]                     
+                                          </label>                  
+                                        </div>
+   	 				 				[%
+                               		} //Fin for -> Option.select
+                               		%]
+                                     </div>
+                                  </div>
+                             [%
+	           				} //Fin select multiple
+	           				else {
+	            			%]  
+	            				<div class="form-group">
+                                     <label class="col-md-4 control-label">[%=label.content%]</label>         
+                                     <div class="col-md-5">
+                                     	[%
+	    								for (option in formElement.options) { //Opciones multiples
+	   	 				 				%]
+	   	 				 					<div class="checkbox">                   
+	                                          <label>                       
+	                                          <input type="checkbox" 
+	                                          		name="[%=formElement.name%]" 
+	                                          		value="[%=option.value%]"
+	                                          		required="[%=formElement.required%]"
+	                                          		>
+	                                          	[%=option.content%]                     
+	                                          </label>                  
+	                                        </div>
+	   	 				 				[%
+	                               		} //Fin for -> Option.select
+	                               		%]
+                                     </div>
+                                  </div>
+	            			[%
+           					} //Fin else - not multiple
+            				%]	 
+                       	[%
+           				} //Fin if -> Select type
+           				else if (formElement.isTypeOf(html!TextArea)){
+            			%]
+            					<div class="form-group">
+                                    <label class="col-md-4 control-label">[%=label.content%]</label>
+                                    <div class="col-md-5">                  
+                                      <textarea 
+                                      	class="form-control" 
+                                      	rows="[%=formElement.rows%]" 
+                                      	id="[%=formElement.id%]" 
+                                      	name="[%=formElement.name%]" 
+                                      	maxlength="[%=formElement.maxLength%]"
+                                      	required="[%=formElement.required%]">
+                                      </textarea>            
+                                    </div>
+                                  </div>
+            			[%
+           				} //Fin text area
+           				else if (formElement.isTypeOf(html!SelectComplex)){
+            			%]
+            					<div class="form-group">
+                                    <label class="col-md-4 control-label">[%=label.content%]</label>  
+                                    <div class="col-md-6">
+                                        <table class="table table-hover grid_question">
+                                          <tr>
+                                            <th></th>
+                                            <th>Si</th>
+                                            <th>No</th>
+                                            <th>Algunas veces</th>
+                                          </tr>
+                                          <tr>
+                                            <td><output>¿Hay cumplimiento del curso?</output></td>
+                                            <td><input type="radio" name="8" value="1" class="grid_option"/></td>
+                                            <td><input type="radio" name="8" value="2" class="grid_option"/></td>
+                                            <td><input type="radio" name="8" value="3" class="grid_option"/></td>
+                                          </tr>
+                                          <tr>
+                                            <td><output>¿Existen asesorías?</output></td>
+                                            <td><input type="radio" name="9" value="4" class="grid_option"/></td>
+                                            <td><input type="radio" name="9" value="5" class="grid_option"/></td>
+                                            <td><input type="radio" name="9" value="6" class="grid_option"/></td>
+                                          </tr>
+                                          <tr>
+                                            <td><output>¿Se resuelven los problemas a tiempo?</output></td>
+                                            <td><input type="radio" name="10" value="7" class="grid_option"/></td>
+                                            <td><input type="radio" name="10" value="8" class="grid_option"/></td>
+                                            <td><input type="radio" name="10" value="9" class="grid_option"/></td>
+                                          </tr>
+                                          <tr>
+                                            <td><output>¿Es clara la información suministrada?</output></td>
+                                            <td><input type="radio" name="11" value="10" class="grid_option"/></td>
+                                            <td><input type="radio" name="11" value="11" class="grid_option"/></td>
+                                            <td><input type="radio" name="11" value="12" class="grid_option"/></td>
+                                          </tr>
+                                        </table>
+                                    </div>
+                                </div>
+            			[%
+           				} //Fin select complex
+            			%]
+                    [%
+                   	} //Fin for questions
+                    %]
+                               </div>
+                            </div>
+						[%
+	       	 		} //Fin for section
+	        	%]
+                            <div class="form-group">
+                              <label class="col-md-4 control-label"></label>
+                              <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary" value="submit" style="width: 360px;">Enviar</button>
+                              </div>
+                            </div>
+
+                        </form>
+
+                     </div>       	 		 
+       	 		 
+       	 		 [%
+       	 	 	break; //TODO Temporal
+       	 	} //Fin if view Encuesta
+       	 	else if (view.title == "Gráficas") {
+       	 	
+       	 	}
+       	 	else if (view.title == "Reportes") {
+       	 	
+       	 	}
+        } //Fin for views
+        %]
+
+                    <div role="tabpanel" class="tab-pane" id="graphs">
+                      
+                      <fieldset>
+                        <legend><h2>Gráficas del resultado encuesta</h2></legend>
+                      </fieldset>
+
+                      <div id="graph_1"></div>
+                      <div id="graph_2"></div>
+                      <div id="graph_3"></div>
+                      
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="reports">
+
+                        <fieldset>
+                          <legend><h2>Reportes encuesta</h2></legend>
+                        </fieldset>
+
+                        <div class="row">
+                        
+                            <div class="col-md-12">
+                              <div class="update-nag">
+                                <div class="update-split"><i></i>10</div>
+                                <div class="update-text">Cantidad de mujeres del curso Ágiles que respondieron la encuesta.</div>
+                              </div>
+                            </div>
+                        
+                            <div class="col-md-12">
+                              <div class="update-nag">
+                                <div class="update-split update-info">10</div>
+                                <div class="update-text">Total de estudiantes que asisten al curso de Automatización.</div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-12">
+                              <div class="update-nag">
+                                <div class="update-split update-success">10</div>
+                                <div class="update-text">Estudiantes que aprueban el contenido del programa del curso y horario.</div>
+                              </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                              <div class="update-nag">
+                                <div class="update-split update-danger">10</div>
+                                <div class="update-text">Cantidad de estudiantes del curso de Automatización cuyo satisfacción es alta</div>
+                              </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Encuesta enviada</h4>
+      </div>
+      <div class="modal-body">
+      Tu opinión es muy valiosa, gracias por contestar la encuesta.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="error" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Error enviar encuesta.</h4>
+      </div>
+      <div class="modal-body">
+      En este momento no es posible enviar la encuesta. Intente nuevamente!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>

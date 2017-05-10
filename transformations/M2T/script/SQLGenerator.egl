@@ -1,0 +1,93 @@
+DECLARE @SurveyID INT, @QuestionID INT, @SectionID INT
+[%	
+
+var upperRoot : cs!Creator:=cs!Creator.all.at(0);
+var dateFormat = new Native("java.text.SimpleDateFormat")("yyy/MM/dd");
+//var dateFormatInput = new Native("java.text.SimpleDateFormat")("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+for(survey in cs!Survey.all){
+	var root = survey;	
+	
+	//var startDate = dateFormatInput.parse(root.startDate);
+	//var endDate = dateFormatInput.parse(root.endDate);
+	
+%]
+
+	INSERT INTO Survey(title, startDate, endDate, description, idByUser)
+	VALUES('[%=root.title%]', N'[%=root.startDate%]', N'[%=root.endDate%]', '[%=root.description%]', '[%=root.name%]')
+	SET @SurveyID = SCOPE_IDENTITY()	
+	[%for(section in survey.sections){%]
+ 		INSERT INTO Section(name, idSurvey, idByUser) 
+ 		VALUES ('[%=section.title%]', @SurveyID, '[%=section.name%]')
+ 		SET @SectionID = SCOPE_IDENTITY()
+ 	[%for(question in section.questions){
+ 		var required;
+ 		if(question.isRequired)
+ 			required=1;
+ 		else
+ 			required=0;
+ 			
+ 		if(question.isTypeOf(cs!Scalar)){%]
+ 			INSERT INTO Question(description, required, type, idSection, idByUser, startValue,endValue)
+			VALUES ('[%=question.description%]', [%=required%], '[%=question->eClass().name%]', @SectionID, '[%=question.name%]', [%=question.startValue%], [%=question.endValue%])
+ 			SET @QuestionID = SCOPE_IDENTITY()
+ 		[%}else{%]
+			INSERT INTO Question(description, required, type, idSection, idByUser)
+			VALUES ('[%=question.description%]', [%=required%], '[%=question->eClass().name%]', @SectionID, '[%=question.name%]')
+			SET @QuestionID = SCOPE_IDENTITY()
+ 		[%}
+ 		if(question.isTypeOf(cs!Single) or question.isTypeOf(cs!Multiple)){
+	 		for(answer in question.answers){%]	
+		 			INSERT INTO AnswerOption(description, idQuestion, idByUser) VALUES ('[%=answer.description%]', @QuestionID, '[%=answer.name%]')
+	 		[%}
+	 	}--Grid
+	 	if(question.isTypeOf(cs!Grid)){
+	 		for(answer in question.answerOptions){%]
+					INSERT INTO AnswerOption(description, idQuestion, idByUser) VALUES ('[%=answer.description%]', @QuestionID, '[%=answer.name%]')
+			[%}	 		
+	 		for(scale in question.scaleOptions){%]	
+	 				INSERT INTO ScaleOption(description, idQuestion, idByUser) VALUES ('[%=scale.description%]', @QuestionID, '[%=scale.name%]')
+	 		[%}
+ 		}
+ 	}
+ 	}%]
+ 	
+ 	
+ 	[%for(relation in survey.relations){
+ 		var select = 'SELECT COUNT (questionnaire.id) FROM Questionnaire questionnaire '+
+				     'INNER JOIN Question question ON questionnaire.idQuestion= question.id '+
+					 'INNER JOIN AnswerOption answer ON  questionnaire.idAnswerOption = answer.id WHERE '+relation.expressionlogic.GetWhereCondition();
+ 	%]
+ 	
+		INSERT INTO Relation (idSurvey, condition, [description]) VALUES
+           	(@SurveyID, '[%=select%]','[%=relation.Description %]')
+ 	[%}
+ 	
+ }%]
+ 
+ 
+ [%
+	operation cs!Expression GetWhereCondition() : String {
+		
+		if(self.isTypeOf(cs!TotalAnswerByScalarValue))
+			return '(question.idByUser =\'\''+ self.questionId +'\'\' AND questionnaire.answerScalarValue '+ self.GetOperatorName()+ ' ' +self.value +' )';			
+		else if(self.isTypeOf(cs!TotalAnswerValue))
+			return '(question.idByUser=\'\''+ self.questionId+ '\'\' AND answer.idByUser =\'\''+self.answerId+'\'\' )';
+		else 
+			return '('+ self.left.GetWhereCondition()  +' '+ self.operator.name+' '+ self.rigth.GetWhereCondition() +')';		
+	}
+	
+	operation cs!TotalAnswerByScalarValue GetOperatorName():String{		
+		if(self.mathOperator ==  cs!MathOperator#LessThan)
+			return '<';
+		else if(self.mathOperator == cs!MathOperator#LessThan)
+			return '>';
+		else if(self.mathOperator == cs!MathOperator#GreaterThan)
+			return '=';
+		else if(self.mathOperator == cs!MathOperator#GreaterEquals)
+			return '>=';
+		else if(self.mathOperator == cs!MathOperator#LessEquals)
+			return '<=';
+	}
+%]
+ 
+ 			

@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="ISO-8859-1">
+        <title>Evaluación del curso</title>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/css/survey.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="resources/js/survey/service_survey.js"></script>
+        <script type="text/javascript" src="resources/js/graph/service_graph.js"></script>
+
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/highcharts-more.js"></script>
+        <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+
+    </head>
+ 
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Nav tabs -->
+            <div class="card">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#survey" aria-controls="survey" role="tab" data-toggle="tab">Encuesta</a></li>
+                    <li role="presentation"><a href="#graphs" aria-controls="graphs" role="tab" data-toggle="tab">Gráficas</a></li>
+                    <li role="presentation"><a href="#reports" aria-controls="reports" role="tab" data-toggle="tab">Reportes</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+       	 		 
+                    <div role="tabpanel" class="tab-pane active" id="survey">
+                    
+                        <form class="form-horizontal" method="post" id="formEncuesta">
+                            
+                            <input type="hidden" name="survey_id" value="1" id="survey_id"> 
+
+                            <fieldset>
+                                <legend><h2>Evaluación del curso</h2></legend>
+                                <div class="form-group">
+                                  <label class="col-md-12 ">
+                                  Hola, Por favor, invierta unos pocos minutos de su tiempo para rellenar el siguiente cuestionario.
+                                  </label> 
+                                </div>
+                            </fieldset>
+                           <div class="panel panel-default">
+                               <div class="panel-heading">Datos personales</div>
+                               <div class="panel-body">
+                               	<div class="form-group">
+                                     <label class="col-md-4 control-label">Nombres</label>           
+                                     <div class="col-md-5">              
+                                      <input name="1" 
+                                      		id="" 
+                                      		type="TEXT" 
+                                      		maxlength="50"
+                                      		required="false"
+                                      		class="form-control input-md">            
+                                      </div>
+                                 </div>
+                               	
+                               	 <div class="form-group single-question">
+                                     <label class="col-md-4 control-label">Género</label>                
+                                     <div class="col-md-5">
+   	 				 					<div class="radio">                   
+                                          <label>                       
+                                          <input type="radio" 
+                                          		name="2" 
+                                          		value="A1"
+                                          		required="true"
+                                          		>
+                                          	Femenino                     
+                                          </label>                  
+                                        </div>
+   	 				 					<div class="radio">                   
+                                          <label>                       
+                                          <input type="radio" 
+                                          		name="2" 
+                                          		value="A2"
+                                          		required="true"
+                                          		>
+                                          	Masculino                     
+                                          </label>                  
+                                        </div>
+                                     </div>
+                                  </div>
+	 
+                               	<div class="form-group">
+                                     <label class="col-md-4 control-label">Código</label>           
+                                     <div class="col-md-5">              
+                                      <input name="3" 
+                                      		id="" 
+                                      		type="TEXT" 
+                                      		maxlength="10"
+                                      		required="false"
+                                      		class="form-control input-md">            
+                                      </div>
+                                 </div>
+                               </div>
+                            </div>
+                           <div class="panel panel-default">
+                               <div class="panel-heading">Evaluación del curso</div>
+                               <div class="panel-body">
+                               	
+                               	 <div class="form-group single-question">
+                                     <label class="col-md-4 control-label">¿A qué curso acudes? </label>                
+                                     <div class="col-md-5">
+   	 				 					<div class="radio">                   
+                                          <label>                       
+                                          <input type="radio" 
+                                          		name="4" 
+                                          		value="A3"
+                                          		required="true"
+                                          		>
+                                          	Automatización                     
+                                          </label>                  
+                                        </div>
+   	 				 					<div class="radio">                   
+                                          <label>                       
+                                          <input type="radio" 
+                                          		name="4" 
+                                          		value="A4"
+                                          		required="true"
+                                          		>
+                                          	Agiles                     
+                                          </label>                  
+                                        </div>
+   	 				 					<div class="radio">                   
+                                          <label>                       
+                                          <input type="radio" 
+                                          		name="4" 
+                                          		value="A5"
+                                          		required="true"
+                                          		>
+                                          	Fabricas de Software                     
+                                          </label>                  
+                                        </div>
+                                     </div>
+                                  </div>
+	 
+  
+	            				<div class="form-group">
+                                     <label class="col-md-4 control-label">¿Cuáles son los aspectos que más rescata del curso?</label>         
+                                     <div class="col-md-5">
+	   	 				 					<div class="checkbox">                   
+	                                          <label>                       
+	                                          <input type="checkbox" 
+	                                          		name="5" 
+	                                          		value="6"
+	                                          		required="true"
+	                                          		>
+	                                          	Logistica                     
+	                                          </label>                  
+	                                        </div>
+	   	 				 					<div class="checkbox">                   
+	                                          <label>                       
+	                                          <input type="checkbox" 
+	                                          		name="5" 
+	                                          		value="7"
+	                                          		required="true"
+	                                          		>
+	                                          	Tiempo                     
+	                                          </label>                  
+	                                        </div>
+	   	 				 					<div class="checkbox">                   
+	                                          <label>                       
+	                                          <input type="checkbox" 
+	                                          		name="5" 
+	                                          		value="8"
+	                                          		required="true"
+	                                          		>
+	                                          	Contenido del curso                     
+	                                          </label>                  
+	                                        </div>
+	   	 				 					<div class="checkbox">                   
+	                                          <label>                       
+	                                          <input type="checkbox" 
+	                                          		name="5" 
+	                                          		value="9"
+	                                          		required="true"
+	                                          		>
+	                                          	Horario                     
+	                                          </label>                  
+	                                        </div>
+	   	 				 					<div class="checkbox">                   
+	                                          <label>                       
+	                                          <input type="checkbox" 
+	                                          		name="5" 
+	                                          		value="10"
+	                                          		required="true"
+	                                          		>
+	                                          	Plan de estudios                     
+	                                          </label>                  
+	                                        </div>
+                                     </div>
+                                  </div>
+	 
+                    			<div class="form-group">
+                                     <label class="col-md-4 control-label">Indique su nivel de satisfacción general frente al curso</label>           
+                                     <div class="col-md-5"> 
+                                     <div class="range range-success">             
+	                                      <input name="6" 
+	                                      		id="" 
+	                                      		type="RANGE" 
+	                                      		maxlength="0"
+	                                      		required="true"
+	                                      		step="1"
+	                                      		min="1"
+	                                      		max="5"
+	                                      		class="form-control input-md"
+	                                      		onchange="outRange.value=this.value"> 
+	                                      <output id="outRange">1</output>           
+                                      	</div>
+                                      </div>
+                                 </div>
+            					<div class="form-group">
+                                    <label class="col-md-4 control-label">¿Hay algo que se podría mejorar en el curso? Por favor, déjanos saber tu opinión</label>
+                                    <div class="col-md-5">                  
+                                      <textarea 
+                                      	class="form-control" 
+                                      	rows="5" 
+                                      	id="" 
+                                      	name="7" 
+                                      	maxlength="100"
+                                      	required="false">
+                                      </textarea>            
+                                    </div>
+                                  </div>
+            					<div class="form-group">
+                                    <label class="col-md-4 control-label">Evalúa los siguientes enunciados según tu opinión</label>  
+                                    <div class="col-md-6">
+                                        <table class="table table-hover grid_question">
+                                          <tr>
+                                            <th></th>
+                                            <th>Si</th>
+                                            <th>No</th>
+                                            <th>Algunas veces</th>
+                                          </tr>
+                                          <tr>
+                                            <td><output>¿Hay cumplimiento del curso?</output></td>
+                                            <td><input type="radio" name="8" value="1" class="grid_option"/></td>
+                                            <td><input type="radio" name="8" value="2" class="grid_option"/></td>
+                                            <td><input type="radio" name="8" value="3" class="grid_option"/></td>
+                                          </tr>
+                                          <tr>
+                                            <td><output>¿Existen asesorías?</output></td>
+                                            <td><input type="radio" name="9" value="4" class="grid_option"/></td>
+                                            <td><input type="radio" name="9" value="5" class="grid_option"/></td>
+                                            <td><input type="radio" name="9" value="6" class="grid_option"/></td>
+                                          </tr>
+                                          <tr>
+                                            <td><output>¿Se resuelven los problemas a tiempo?</output></td>
+                                            <td><input type="radio" name="10" value="7" class="grid_option"/></td>
+                                            <td><input type="radio" name="10" value="8" class="grid_option"/></td>
+                                            <td><input type="radio" name="10" value="9" class="grid_option"/></td>
+                                          </tr>
+                                          <tr>
+                                            <td><output>¿Es clara la información suministrada?</output></td>
+                                            <td><input type="radio" name="11" value="10" class="grid_option"/></td>
+                                            <td><input type="radio" name="11" value="11" class="grid_option"/></td>
+                                            <td><input type="radio" name="11" value="12" class="grid_option"/></td>
+                                          </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                               </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-md-4 control-label"></label>
+                              <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary" value="submit" style="width: 360px;">Enviar</button>
+                              </div>
+                            </div>
+
+                        </form>
+
+                     </div>       	 		 
+       	 		 
+
+                    <div role="tabpanel" class="tab-pane" id="graphs">
+                      
+                      <fieldset>
+                        <legend><h2>Gráficas del resultado encuesta</h2></legend>
+                      </fieldset>
+
+                      <div id="graph_1"></div>
+                      <div id="graph_2"></div>
+                      <div id="graph_3"></div>
+                      
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="reports">
+
+                        <fieldset>
+                          <legend><h2>Reportes encuesta</h2></legend>
+                        </fieldset>
+
+                        <div class="row">
+                        
+                            <div class="col-md-12">
+                              <div class="update-nag">
+                                <div class="update-split"><i></i>10</div>
+                                <div class="update-text">Cantidad de mujeres del curso Ágiles que respondieron la encuesta.</div>
+                              </div>
+                            </div>
+                        
+                            <div class="col-md-12">
+                              <div class="update-nag">
+                                <div class="update-split update-info">10</div>
+                                <div class="update-text">Total de estudiantes que asisten al curso de Automatización.</div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-12">
+                              <div class="update-nag">
+                                <div class="update-split update-success">10</div>
+                                <div class="update-text">Estudiantes que aprueban el contenido del programa del curso y horario.</div>
+                              </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                              <div class="update-nag">
+                                <div class="update-split update-danger">10</div>
+                                <div class="update-text">Cantidad de estudiantes del curso de Automatización cuyo satisfacción es alta</div>
+                              </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Encuesta enviada</h4>
+      </div>
+      <div class="modal-body">
+      Tu opinión es muy valiosa, gracias por contestar la encuesta.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="error" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Error enviar encuesta.</h4>
+      </div>
+      <div class="modal-body">
+      En este momento no es posible enviar la encuesta. Intente nuevamente!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>

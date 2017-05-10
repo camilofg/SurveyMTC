@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<com.mtcflow.model:MTC xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:com.mtcflow.model="http://com.mtcflow.mtc/1.1" M2MTechnology="ETL" M2TTechnology="EGL" HOTechnology="ETL">
+  <files name="Page"/>
+  <files name="ScriptSQL"/>
+  <files name="App DSL" URI="${appFile}"/>
+  <metamodels name="Survey" URI="" alias="Survey" autoregister="false" metamodelURI="http://www.uniandes.edu.co/survey"/>
+  <metamodels name="Html" URI="Html" alias="html" metamodelURI="http://www.uniandes.edu.co/html"/>
+  <models name="Survey" URI="survey.xmi" metamodels="//@metamodels.0"/>
+  <models name="HTML" URI="html.xmi" metamodels="//@metamodels.1"/>
+  <inputModels model="//@models.0" modelAlias="survey" transformation="//@transformations.0"/>
+  <inputModels model="//@models.1" modelAlias="cs" transformation="//@transformations.1"/>
+  <inputModels model="//@models.0" modelAlias="cs" transformation="//@transformations.2" metamodelAlias="Survey"/>
+  <transformations xsi:type="com.mtcflow.model:M2MTransformation" name="Survey2Html" URI="M2M.etl" technology=""/>
+  <transformations xsi:type="com.mtcflow.model:M2TTransformation" name="Html2Page" URI="saveHTMLsurvey.egl" target="${output}"/>
+  <transformations xsi:type="com.mtcflow.model:M2TTransformation" name="Survey2Sql" URI="script/mainSQLGenerator.egl" target="${output}"/>
+  <transformations xsi:type="com.mtcflow.model:T2MTransformation" name="Gen XMI" URI="Surveys.xtext"/>
+  <outputModels modelAlias="html" model="//@models.1" transformation="//@transformations.0" metamodelAlias="html"/>
+  <outputModels modelAlias="App DSL" model="//@models.0" transformation="//@transformations.3" metamodelAlias="Surveys"/>
+  <configurations>
+    <variables name="output" defaultValue="gen"/>
+    <variables name="appFile" defaultValue="models/modeloSurvey.survey"/>
+  </configurations>
+  <inputFiles file="//@files.2" transformation="//@transformations.3"/>
+  <outputFiles transformation="//@transformations.1" file="//@files.0"/>
+  <outputFiles transformation="//@transformations.2" file="//@files.1"/>
+</com.mtcflow.model:MTC>

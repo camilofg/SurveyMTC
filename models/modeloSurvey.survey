@@ -1,0 +1,93 @@
+CREATOR="Paula Castellanos"
+	SURVEY="Nombre de la encuesta"
+		ID=Survey5
+		DESCRIPTION="Hola, Por favor, invierta unos pocos minutos de su tiempo para rellenar el siguiente cuestionario."
+		STARTDATE=2017-01-01
+		ENDDATE=2017-01-30
+		URL_GET_DATA_GRAPH="http://www.google.com"
+		URL_GET_RELATION_RESULT="http://www.google.com"
+		URL_SAVE_RESPONSE="http://www.google.com"
+		SECTION="Datos personales"
+			ID=S3
+			OPEN="Nombres"
+				ID=O2
+				REQUIRED=false
+				MULTILINE=true				
+				MAXLENGTH=50
+				TYPE=String
+			ENDOPEN
+		ENDSECTION
+		SECTION="Evaluación del curso"
+			ID=S35
+			MULTIPLE="¿Cuáles son los aspectos que más rescata del curso?"
+				ID=M35
+				GRAPHTYPE=Scalar
+				REQUIRED=false
+				ANSWER="Logistica"
+					ID=M20
+				ENDANSWER
+				ANSWER="Tiempo"
+					ID=M21
+				ENDANSWER
+				ANSWER="Otro"
+					ID=M22
+					WHITE_SPACE_REQUIRED=true
+					MAX_LENGTH_WHITE_SPACE=200
+				ENDANSWER
+			ENDMULTIPLE
+			SINGLE="Seleccione el profesor a evaluar"
+				ID=S23
+				GRAPHTYPE=None
+				REQUIRED=true
+				CONTROLTYPE=Combo
+				ANSWER="Kelly"
+					ID=SN23
+				ENDANSWER				
+				ANSWER="Gloria"
+					ID=SN24
+				ENDANSWER
+			ENDSINGLE
+			SINGLE="Seleccione el profesor a evaluar 2"
+				ID=S24
+				GRAPHTYPE=None
+				REQUIRED=true
+				CONTROLTYPE=Combo
+				ANSWER="Juan"
+					ID=SN25
+				ENDANSWER				
+				ANSWER="Gloria"
+					ID=SN26
+				ENDANSWER
+			ENDSINGLE
+			SCALAR="Indique su nivel de satisfacción general frente al curso"
+				ID=SL126
+				GRAPHTYPE=Scalar
+				REQUIRED=false
+				START_VALUE=0
+				END_VALUE=100
+			ENDSCALAR
+			SCALAR="Indique su nivel de satisfacción general frente al curso"
+				ID=SL27
+				GRAPHTYPE=Scalar
+				REQUIRED=false
+				START_VALUE=0
+				END_VALUE=100
+			ENDSCALAR
+		ENDSECTION
+		RELATION 
+			DESCRIPTION="blabla"
+			//escalares 
+			OPERATOR=AND
+				HOW_MANY_ANSWER_OF_QUESTION S35.SL126 Equals 3
+				OPERATOR=OR
+					// single
+					//ejemplo "Cuantas personas contestaron a la pregunta 2 la respuesta 4"
+					HOW_MANY_PEOPLE_ANSWER S35.S24.SN26
+					//escalares
+					//Ejemplo "Cuantos personas contestaron a la pregunta 3 > 4 
+					HOW_MANY_ANSWER_OF_QUESTION S35.SL27 Equals 3  
+				ENDOPERATOR
+			ENDOPERATOR
+		ENDRELATION
+	ENDSURVEY
+	

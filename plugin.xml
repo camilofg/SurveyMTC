@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated MultiplatformMM -->
+      <package
+            uri="http://co.edu.uniandes.multiplatform"
+            class="multiplatform.MultiplatformPackage"
+            genModel="metamodels/MultiplatformMM.genmodel"/>
+   </extension>
+
+</plugin>

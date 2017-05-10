@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Survey:Creator xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Survey="http://www.uniandes.edu.co/survey" name="Julian Picon">
+  <surveys title="Evaluación del curso" startDate="2017-03-30T00:00:00.000-0500" endDate="2017-04-30T00:00:00.000-0500" description="Hola, Por favor, invierta unos pocos minutos de su tiempo para rellenar el siguiente cuestionario." urlToSaveResponses="http://www.google.com" name="Survey1" urlToGetData="http://www.google.com" urlToGetRelationResult="http://www.google.com">
+    <sections title="Datos personales" name="Section1">
+      <questions xsi:type="Survey:Open" description="Nombres" name="Open1" maxLength="50"/>
+      <questions xsi:type="Survey:Single" description="Género" isRequired="true" GraphType="Pie" name="Single1" type="ListControl">
+        <answers description="Femenino" name="Answer1"/>
+        <answers description="Masculino" name="Answer2"/>
+      </questions>
+      <questions xsi:type="Survey:Open" description="Código" name="Open2" maxLength="10"/>
+    </sections>
+    <sections title="Evaluación del curso" name="2">
+      <questions xsi:type="Survey:Single" description="¿A qué curso acudes? " isRequired="true" GraphType="Bar" name="Single2">
+        <answers description="Automatización" name="Answer3"/>
+        <answers description="Agiles" name="Answer4"/>
+        <answers description="Fabricas de Software" name="Answer5"/>
+      </questions>
+      <questions xsi:type="Survey:Multiple" description="¿Cuáles son los aspectos que más rescata del curso?" isRequired="true" GraphType="Bar" name="Multiple1">
+        <answers description="Logistica" name="Answer6"/>
+        <answers description="Tiempo" name="Answer7"/>
+        <answers description="Contenido del curso" name="Answer8"/>
+        <answers description="Horario" name="Answer9"/>
+        <answers description="Plan de estudios" name="Answer10"/>
+      </questions>
+      <questions xsi:type="Survey:Scalar" description="Indique su nivel de satisfacción general frente al curso" isRequired="true" GraphType="Scalar" name="Scalar1" startValue="1" endValue="5"/>
+      <questions xsi:type="Survey:Open" description="¿Hay algo que se podría mejorar en el curso? Por favor, déjanos saber tu opinión" name="Open3" isMultiline="true" maxLength="100"/>
+      <questions xsi:type="Survey:Grid" description="Evalúa los siguientes enunciados según tu opinión" GraphType="Bar" name="Grid1">
+        <scaleOptions description="Si" name="ScaleOption1"/>
+        <scaleOptions description="No" name="ScaleOption2"/>
+        <scaleOptions description="Alguna Veces" name="ScaleOption3"/>
+        <answerOptions description="¿Hay cumplimiento del curso?" name="AnswerOption1"/>
+        <answerOptions description="¿Existen asesorías?" name="AnswerOption2"/>
+        <answerOptions description="¿Se resuelven los problemas a tiempo?" name="AnswerOption3"/>
+        <answerOptions description="¿Es clara la información suministrada?" name="AnswerOption4"/>
+      </questions>
+    </sections>
+    <relations Description="Cuantas mujeres acuden a la clase de automatización">
+      <expressionlogic>
+        <rigth xsi:type="Survey:TotalAnswerValue" questionId="Single2" answerId="Answer3"/>
+        <left xsi:type="Survey:TotalAnswerValue" questionId="Single1" answerId="Answer1"/>
+      </expressionlogic>
+    </relations>
+    <relations Description="Cuantas personas sienten un nivel de satisfacción bueno (>=4) por la clase de automatización ">
+      <expressionlogic>
+        <rigth xsi:type="Survey:TotalAnswerValue" questionId="Single2" answerId="Answer3"/>
+        <left xsi:type="Survey:TotalAnswerByScalarValue" questionId="Scalar1" value="4" mathOperator="GreaterEquals"/>
+      </expressionlogic>
+    </relations>
+  </surveys>
+</Survey:Creator>

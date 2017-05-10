@@ -1,0 +1,5 @@
+[%
+	operation mp!AbstractCodeElement hasAnnotation() : Set {
+		return self.codeRelation.select(a|a.isTypeOf(mp!HasValue)).select(a|a.annotation.size()>0);
+	}
+%]

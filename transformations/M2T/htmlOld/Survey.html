@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="ISO-8859-1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var sectionSelected = getParameterByName('section');
+
+            $("fieldset[id*='Section']").css("display", "none");
+
+            $('#Section_' + sectionSelected).css("display", "block");
+			
+			$("#ex5").slider();
+
+            $(":radio").click(function () {
+                if ($(this).attr("class") == "other")
+                    $("#" + this.id + "_other").css("display", "block");
+                else
+                    $("#" + this.id + "_other").css("display", "none");
+            });
+
+            function showValue(newValue) {
+                document.getElementById("range").innerHTML = newValue;
+            }
+
+            function getParameterByName(name, url) {
+                if (!url) {
+                    url = window.location.href;
+                }
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+        });
+    </script>
+    <style type="text/css">
+        fieldset.scheduler-border {
+            border: 1px groove #ddd !important;
+            padding: 0 1.4em 1.4em 1.4em !important;
+            margin: 0 0 1.5em 0 !important;
+            -webkit-box-shadow: 0px 0px 0px 0px #000;
+            box-shadow: 0px 0px 0px 0px #000;
+        }
+        
+        /*
+        input[type=range]::-webkit-slider-thumb {
+		  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+		  border: 1px solid #000000;
+		  height: 39px;
+		  width: 19px;
+		  border-radius: 13px;
+		  background: rgba(130, 255, 255, 0.45);
+		  cursor: pointer;
+		  -webkit-appearance: none;
+		  margin-top: -15.5px;
+		}
+		*/
+		
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+    </style>
+<title>Satisfacción del cliente</title>
+
+</head>
+<body>
+<div class="div">
+<a  name="top"></a>
+<div class="container">
+        <div class="jumbotron" id="Survey">
+            <h1>Satisfacción del cliente</h1>
+            <p>
+                Se quiere saber cual es la percepción que tiene el cliente frente a nuestro servicio
+            </p>
+        </div>
+ 	<fieldset class="box-border" id="Section_1" >
+ 	<legend class="scheduler-border">Datos personales:</legend>
+ 		<div class="input-group" id="question_2">
+                <span class="input-group-addon">Nombre completo</span>
+                <input id="answer_2" 
+	        				type="text" 
+        			class="form-control" name="answer_2" placeholder="Nombre completo" />
+		</div>
+			 		</br>
+			 		</br>
+ 		<div class="input-group" id="question_3">
+                <span class="input-group-addon">Fecha de nacimiento</span>
+                <input id="answer_3" 
+	        				type="date" 
+        			class="form-control" name="answer_3" placeholder="Fecha de nacimiento" />
+		</div>
+			 		</br>
+			 		</br>
+ 		<div class="input-group" id="question_4">
+                <span class="input-group-addon">E-mail</span>
+                <input id="answer_4" 
+	        				type="text" 
+        			class="form-control" name="answer_4" placeholder="E-mail" />
+		</div>
+			 		</br>
+			 		</br>
+	 	<div class="input-group" id="question_5">
+                <fieldset class="scheduler-border">
+                    <legend>Genero</legend>
+                        <div class="radio-inline">
+	                        <label>
+	                        	<input type="radio" name="answer_5" id="answer_5" value="1"
+	                        />Masculino
+	                        </label>
+                        </div>
+                        <div class="radio-inline">
+	                        <label>
+	                        	<input type="radio" name="answer_5" id="answer_5" value="2"
+	                        />Femenino
+	                        </label>
+                        </div>
+                        <div class="radio-inline">
+	                        <label>
+	                        	<input type="radio" name="answer_5" id="answer_5" value="3"
+		                            class="other" 
+	                        />Otro
+	                        </label>
+                        </div>
+		                        	<input id="answer_5_other" style="display:none" type="text" class="form-control" name="msg" placeholder="Otro/">
+                  </fieldset>
+        </div>
+			 		</br>
+			 		</br>
+ 	</fieldset/> 
+ 	<fieldset class="box-border" id="Section_2" >
+ 	<legend class="scheduler-border">Satisfacción de servicios:</legend>
+			 		</br>
+			 		</br>
+			 	<div id="question_8">
+                    <span class="input-group-addon">Grado de satisfaccion 1 (menor grado) y 5 (mayor grado)</span></br>
+                    <input type="range" name="answer_8" min="1" max="5" step="1"  onchange="showValue(this.value)">
+                </div>
+			 		</br>
+			 		</br>
+ 		<div class="input-group" id="question_10">
+                <span class="input-group-addon">Cual producto usa frecuentemente en su hogar</span>
+                <input id="answer_10" 
+	        				type="text" 
+        			class="form-control" name="answer_10" placeholder="Cual producto usa frecuentemente en su hogar" />
+		</div>
+			 		</br>
+			 		</br>
+			 	<div id="question_13">
+                    <span class="input-group-addon">Scalar test</span></br>
+                    <input type="range" name="answer_13" min="0" max="10" step="1"  onchange="showValue(this.value)">
+                </div>
+			 		</br>
+			 		</br>
+ 		<div class="input-group" id="question_12">
+                <span class="input-group-addon">Por favor mándenos sus sugerencias, ideas y experiencias</span>
+                <input id="answer_12" 
+	        				type="text" 
+        			class="form-control" name="answer_12" placeholder="Por favor mándenos sus sugerencias, ideas y experiencias" />
+		</div>
+			 		</br>
+			 		</br>
+ 	</fieldset/> 
+ 	<fieldset class="box-border" id="Section_3" >
+ 	<legend class="scheduler-border">Sugerencias:</legend>
+					 	<div class="input-group" id="question_9">
+		                	<span class="input-group-addon">Por favor valora cuánto usas cada dispositivo para conectarte a Internet</span>
+		                	<table>
+		                		<thead>
+			                		<tr>
+			                			<td>&nbsp;&nbsp;&nbsp;</td>
+		                        
+		                        		<td>&nbsp;&nbsp;No tengo&nbsp;&nbsp;</td>
+		                        
+		                        
+		                        		<td>&nbsp;&nbsp;Un poco&nbsp;&nbsp;</td>
+		                        
+		                        
+		                        		<td>&nbsp;&nbsp;Bastante&nbsp;&nbsp;</td>
+		                        
+		                        
+		                        		<td>&nbsp;&nbsp;Mucho&nbsp;&nbsp;</td>
+		                        
+		                        
+		                        		<td>&nbsp;&nbsp;A todas horas&nbsp;&nbsp;</td>
+		                        
+				 					</tr>
+			 					</thead>
+			 					<tbody>
+					 			<tr>
+					 				<td>PC</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_PC" id="answer_PC" value="0" />
+							 				</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_PC" id="answer_PC" value="1" />
+							 				</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_PC" id="answer_PC" value="2" />
+							 				</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_PC" id="answer_PC" value="3" />
+							 				</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_PC" id="answer_PC" value="4" />
+							 				</td>
+				 						</tr>
+					 			<tr>
+					 				<td>SmartPhone</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_SmartPhone" id="answer_SmartPhone" value="0" />
+							 				</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_SmartPhone" id="answer_SmartPhone" value="1" />
+							 				</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_SmartPhone" id="answer_SmartPhone" value="2" />
+							 				</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_SmartPhone" id="answer_SmartPhone" value="3" />
+							 				</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_SmartPhone" id="answer_SmartPhone" value="4" />
+							 				</td>
+				 						</tr>
+					 			<tr>
+					 				<td>Tablet</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_Tablet" id="answer_Tablet" value="0" />
+							 				</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_Tablet" id="answer_Tablet" value="1" />
+							 				</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_Tablet" id="answer_Tablet" value="2" />
+							 				</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_Tablet" id="answer_Tablet" value="3" />
+							 				</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_Tablet" id="answer_Tablet" value="4" />
+							 				</td>
+				 						</tr>
+					 			<tr>
+					 				<td>Smart TV</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_Smart TV" id="answer_Smart TV" value="0" />
+							 				</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_Smart TV" id="answer_Smart TV" value="1" />
+							 				</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_Smart TV" id="answer_Smart TV" value="2" />
+							 				</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_Smart TV" id="answer_Smart TV" value="3" />
+							 				</td>
+							 				<td style="text-align:center">
+							 					<input type="radio" name="answer_Smart TV" id="answer_Smart TV" value="4" />
+							 				</td>
+				 						</tr>
+				 				</tbody>
+				 			</table>
+			 		</br>
+			 		</br>
+ 	</fieldset/> 
+ 	
+</div>
+</body>
